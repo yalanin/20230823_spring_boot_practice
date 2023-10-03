@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +34,13 @@ public class MyController {
         list.add("橘子");
         store.setProductList(list);
         return store;
+    }
+
+    @RequestMapping("/test")
+    public String test(@RequestParam(defaultValue = "12") Integer id,
+                       @RequestParam(required = false, name="nameTest") String name) {
+        System.out.println("id: " + id);
+        System.out.println("name: " + name);
+        return "Hello World";
     }
 }
