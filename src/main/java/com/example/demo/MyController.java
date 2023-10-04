@@ -3,10 +3,7 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +33,18 @@ public class MyController {
         return store;
     }
 
-    @RequestMapping("/test")
-    public String test(@RequestParam(defaultValue = "12") Integer id,
+    @RequestMapping("/test1")
+    public String test1(@RequestParam(defaultValue = "12") Integer id,
                        @RequestParam(required = false, name="nameTest") String name) {
         System.out.println("id: " + id);
         System.out.println("name: " + name);
-        return "Hello World";
+        return "Hello test1";
+    }
+
+    @RequestMapping("/test2")
+    public String test2(@RequestBody Student student) {
+        System.out.println("student id: " + student.getId());
+        System.out.println("student name:" + student.getName());
+        return "Hello test2";
     }
 }
