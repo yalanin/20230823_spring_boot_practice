@@ -47,4 +47,10 @@ public class MyController {
         System.out.println("student name:" + student.getName());
         return "Hello test2";
     }
+
+    @RequestMapping("/test3")
+    public String test3(@RequestHeader String info) {
+        System.out.println("info: " + info);
+        return "Hello test3";
+    }
 }
