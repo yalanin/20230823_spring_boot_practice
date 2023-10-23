@@ -1,7 +1,15 @@
 package com.example.demo;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Student {
+    @NotBlank
     String name;
+
+    @Max(10)
+    @NotNull
     Integer id;
 
     public String getName() {
