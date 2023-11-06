@@ -70,4 +70,14 @@ public class MyController {
         System.out.println("name:" + name);
         return "Hello test4";
     }
+
+    @RequestMapping("/test5")
+    public String test5() {
+        throw new RuntimeException("test5 error");
+    }
+
+    @RequestMapping("/test6")
+    public String test6() {
+        throw new IllegalArgumentException("test6 error");
+    }
 }
