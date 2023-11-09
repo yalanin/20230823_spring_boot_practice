@@ -73,11 +73,13 @@ public class MyController {
 
     @RequestMapping("/test5")
     public String test5() {
-        throw new RuntimeException("test5 error");
+        System.out.println("執行 test 5 方法");
+        return "Hello test5";
     }
 
     @RequestMapping("/test6")
     public String test6() {
-        throw new IllegalArgumentException("test6 error");
+        System.out.println("執行 test 6 方法");
+        return "Hello test6";
     }
 }
