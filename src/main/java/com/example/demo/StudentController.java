@@ -67,12 +67,20 @@ public class StudentController {
         return "執行批次寫入 sql";
     }
 
-    @DeleteMapping("delete_students/{studentId}")
+    @DeleteMapping("/delete_students/{studentId}")
     public String delete_sql(@PathVariable Integer studentId) {
         String sql = "DELETE FROM student WHERE id = :studentId";
         Map<String, Object> map = new HashMap<>();
         map.put("studentId", studentId);
         namedParameterJdbcTemplate.update(sql, map);
         return "執行 delete sql";
+    }
+
+    @GetMapping("/students/select")
+    public List<Student> select_sql() {
+        String sql = "SELECT id, name FROM student";
+        Map<String, Object> map = new HashMap<>();
+        List<Student> list = namedParameterJdbcTemplate.query(sql, map, new StudentRowMapper());
+        return list;
     }
 }
