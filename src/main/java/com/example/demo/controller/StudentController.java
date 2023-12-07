@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Student;
 import com.example.demo.mapper.StudentRowMapper;
+import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -20,7 +22,12 @@ import java.util.Map;
 @Validated
 public class StudentController {
     @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    @Qualifier("test1JdbcTemplate")
+    private NamedParameterJdbcTemplate test1JdbcTemplate;
+
+    @Autowired
+    @Qualifier("test2JdbcTemplate")
+    private NamedParameterJdbcTemplate test2JdbcTemplate;
 
     @Autowired
     private StudentService studentService;
@@ -53,7 +60,7 @@ public class StudentController {
         Map<String, Object> map = new HashMap<>();
         map.put("studentName", student.getName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map), keyHolder);
+        test1JdbcTemplate.update(sql, new MapSqlParameterSource(map), keyHolder);
         int id = keyHolder.getKey().intValue();
         System.out.println("mysql 自動生成 id: " + id);
         return "執行 insert sql";
@@ -68,7 +75,7 @@ public class StudentController {
             parameterSources[i] = new MapSqlParameterSource();
             parameterSources[i].addValue("studentName", student.getName());
         }
-        namedParameterJdbcTemplate.batchUpdate(sql, parameterSources);
+        test1JdbcTemplate.batchUpdate(sql, parameterSources);
         return "執行批次寫入 sql";
     }
 
@@ -77,7 +84,7 @@ public class StudentController {
         String sql = "DELETE FROM student WHERE id = :studentId";
         Map<String, Object> map = new HashMap<>();
         map.put("studentId", studentId);
-        namedParameterJdbcTemplate.update(sql, map);
+        test1JdbcTemplate.update(sql, map);
         return "執行 delete sql";
     }
 
@@ -85,7 +92,7 @@ public class StudentController {
     public List<Student> select_sql() {
         String sql = "SELECT id, name FROM student";
         Map<String, Object> map = new HashMap<>();
-        List<Student> list = namedParameterJdbcTemplate.query(sql, map, new StudentRowMapper());
+        List<Student> list = test1JdbcTemplate.query(sql, map, new StudentRowMapper());
         return list;
     }
 
