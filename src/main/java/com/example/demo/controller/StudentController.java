@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.StudentRepository;
 import com.example.demo.model.Student;
 import com.example.demo.mapper.StudentRowMapper;
 import com.example.demo.service.StudentService;
@@ -21,6 +22,9 @@ import java.util.Map;
 @RestController
 @Validated
 public class StudentController {
+    @Autowired
+    private StudentRepository studentRepository;
+
     @Autowired
     @Qualifier("test1JdbcTemplate")
     private NamedParameterJdbcTemplate test1JdbcTemplate;
@@ -64,6 +68,12 @@ public class StudentController {
         int id = keyHolder.getKey().intValue();
         System.out.println("mysql 自動生成 id: " + id);
         return "執行 insert sql";
+    }
+
+    @PostMapping("jpa_insert")
+    public String jpa_insert(@RequestBody Student student) {
+        studentRepository.save(student);
+        return "執行 jpa create student";
     }
 
     @PostMapping("/students/batch")
